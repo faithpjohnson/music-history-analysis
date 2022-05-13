@@ -5,24 +5,24 @@ fetch("./listen_history.json")
     return response.json(); // convert to JSON
   })
   .then((jsonData) => {
-    appendData(jsonData); // appendData will be a function to render data
+    // appendData(jsonData); // appendData will be a function to render data
     sortCounts(jsonData)
     console.log(jsonData); // print data to the console
   });
 
-// Function to render data
-function appendData(jsonData) {
-  // loop through data and find titles
-  for (let i = 0; i < jsonData.length; i++) {
-    let title = jsonData[i].title;
-    console.log(title);
-    // append data
-    const mainContainer = document.getElementById("data");
-    const li = document.createElement("li");
-    li.innerHTML = `TITLE: ${title}`;
-    mainContainer.append(li);
-  }
-}
+// // Function to render data
+// function appendData(jsonData) {
+//   // loop through data and find titles
+//   for (let i = 0; i < jsonData.length; i++) {
+//     let title = jsonData[i].title;
+//     console.log(title);
+//     // append data
+//     const mainContainer = document.getElementById("data");
+//     const li = document.createElement("li");
+//     li.innerHTML = `TITLE: ${title}`;
+//     mainContainer.append(li);
+//   }
+// }
 
 // Function to count occurances
 function countOccurrences(data) {
@@ -48,6 +48,14 @@ function sortCounts(jsonData) {
     // find top 10 using slice
     let top10 = sortedCounts.slice(0, 10);
     console.log(top10)
+    // render top 10
+    for (let i = 0; i < top10.length; i++) {
+        const title = top10[i].replace('Watched', 'TITLE:')
+        const mainContainer = document.getElementById("data");
+        const li = document.createElement("li");
+        li.innerHTML = `${title}`;
+        mainContainer.append(li);
+    }
 }
 
 
