@@ -6,6 +6,7 @@ fetch("./listen_history.json")
   })
   .then((jsonData) => {
     appendData(jsonData); // appendData will be a function to render data
+    sortCounts(jsonData)
     console.log(jsonData); // print data to the console
   });
 
@@ -24,7 +25,31 @@ function appendData(jsonData) {
 }
 
 // Function to count occurances
+function countOccurrences(data) {
+    let counts = {};
+    for (let i = 0; i < data.length; i++) {
+        let title = data[i].title;
+        if (counts[title]) {
+            counts[title] += 1;
+        } else {
+            counts[title] = 1;
+        }
+    }
+    return counts;
+}
 
 // Function to sort the occurances
+function sortCounts(jsonData) {
+    let counts = countOccurrences(jsonData);
+    // sort counts
+    let sortedCounts = Object.keys(counts).sort(function (a, b) {
+        return counts[b] - counts[a];
+    })
+    // find top 10 using slice
+    let top10 = sortedCounts.slice(0, 10);
+    console.log(top10)
+}
+
+
 
 // Render the top 10 to the DOM
